@@ -31,11 +31,13 @@ input {
 .button {
   font-family: monospace;
   font-size: 10pt;
+  font-weight: bold;
   color: black;
   background-color: buttonface;
   text-align: center;
   padding: 2px 6px 3px;
-  border-width: 2px;
+  margin-right: 5px;
+  border-width: 3px;
   border-style: outset;
   border-color: buttonface;
   cursor: pointer;
