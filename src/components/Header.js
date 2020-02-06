@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
+import AuthContext from '../context/Auth/authContext';
 
 function Header() {
+  const authContext = useContext(AuthContext);
+  const { authUser, logout } = authContext;
+
   return (
     <div className="header">
       <img src="/logo.png" alt="Hooks News Logo" className="logo" />
@@ -19,17 +23,33 @@ function Header() {
       <NavLink to="/search" className="header-link">
         Search
       </NavLink>
-      <div className="divider">|</div>
-      <NavLink to="/create" className="header-link">
-        Submit
-      </NavLink>
-      <NavLink
-        to="/login"
-        className="header-link"
-        style={{ marginLeft: 'auto' }}
-      >
-        Login
-      </NavLink>
+      {authUser && (
+        <>
+          <div className="divider">|</div>
+          <NavLink to="/create" className="header-link">
+            Submit
+          </NavLink>
+        </>
+      )}
+      <div style={{ marginLeft: 'auto' }}>
+        {authUser ? (
+          <div style={{ display: 'flex' }}>
+            <div className="header-name">{authUser.displayName}</div>
+            <div className="divider">|</div>
+            <div className="header-button" onClick={() => logout()}>
+              Logout
+            </div>
+          </div>
+        ) : (
+          <NavLink
+            to="/login"
+            className="header-link"
+            style={{ marginLeft: 'auto' }}
+          >
+            Login
+          </NavLink>
+        )}
+      </div>
     </div>
   );
 }

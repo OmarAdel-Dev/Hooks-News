@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import validateLogin from './validateLogin';
+import AuthContext from '../../context/Auth/authContext';
+import { Link } from 'react-router-dom';
 
 function Login(props) {
-  const [login, setLogin] = useState(true);
+  const authContext = useContext(AuthContext);
+  const { register, login, error, isAuthenticated } = authContext;
+
+  const [loginState, setLoginState] = useState(true);
   const [errors, setErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
 
   const [user, setUser] = useState({
     name: '',
@@ -15,16 +19,10 @@ function Login(props) {
   const { name, email, password } = user;
 
   useEffect(() => {
-    if (isSubmit) {
-      const noErrors = Object.keys(errors).length === 0;
-      if (noErrors) {
-        console.log('Authenticated', user);
-        setIsSubmit(false);
-      } else {
-        setIsSubmit(false);
-      }
+    if (isAuthenticated) {
+      props.history.push('/');
     }
-  }, [errors]);
+  }, [props.history, isAuthenticated]);
 
   const onChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -33,15 +31,14 @@ function Login(props) {
   const onSubmit = e => {
     e.preventDefault();
     setErrors(validateLogin(user));
-    setIsSubmit(true);
-    console.log({ user });
+    loginState ? login(email, password) : register(name, email, password);
   };
 
   return (
     <div>
-      <h2 className="mv3">{login ? 'Login' : 'Create an account'}</h2>
+      <h2 className="mv3">{loginState ? 'Login' : 'Create an account'}</h2>
       <form onSubmit={onSubmit} className="flex flex-column">
-        {!login && (
+        {!loginState && (
           <input
             name="name"
             value={name}
@@ -70,26 +67,29 @@ function Login(props) {
           placeholder="Type a secure password"
         />
         {errors.password && <p className="error-text">{errors.password}</p>}
+        {error && <p className="error-text">{error}</p>}
         <div className="flex mt3">
           <button
             type="submit"
             className="button"
-            disabled={isSubmit}
-            style={{ background: isSubmit ? 'grey' : 'orange' }}
+            style={{ background: 'orange' }}
           >
-            {login ? 'Login' : 'Register'}
+            {loginState ? 'Login' : 'Register'}
           </button>
           <button
             type="button"
             className="button"
-            onClick={() => setLogin(prevLogin => !prevLogin)}
+            onClick={() => setLoginState(prevLogin => !prevLogin)}
           >
-            {login
+            {loginState
               ? 'need to create an account ?'
               : 'already have an account ?'}
           </button>
         </div>
       </form>
+      <div className="forgot-password">
+        <Link to="/forgot">Forgot Password?</Link>
+      </div>
     </div>
   );
 }
