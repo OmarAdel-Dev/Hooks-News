@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
-import AuthContext from './authContext';
-import AuthReducer from './authReducer';
+import FirebaseContext from './firebaseContext';
+import FirebaseReducer from './firebaseReducer';
 
 import {
   REGISTER_SUCCESS,
@@ -14,8 +14,9 @@ import {
 
 import firebase from '../../firebase/config';
 
-const AuthState = props => {
+const FirebaseState = props => {
   const auth = firebase.auth();
+  const db = firebase.firestore();
 
   const initialState = {
     response: {},
@@ -25,7 +26,7 @@ const AuthState = props => {
     error: null
   };
 
-  const [state, dispatch] = useReducer(AuthReducer, initialState);
+  const [state, dispatch] = useReducer(FirebaseReducer, initialState);
 
   // Persist User
 
@@ -111,7 +112,7 @@ const AuthState = props => {
   };
 
   return (
-    <AuthContext.Provider
+    <FirebaseContext.Provider
       value={{
         response: state.response,
         authUser: state.authUser,
@@ -121,12 +122,13 @@ const AuthState = props => {
         register,
         login,
         logout,
-        resetPassword
+        resetPassword,
+        db
       }}
     >
       {props.children}
-    </AuthContext.Provider>
+    </FirebaseContext.Provider>
   );
 };
 
-export default AuthState;
+export default FirebaseState;

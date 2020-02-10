@@ -13,32 +13,29 @@ import LinkList from './Link/LinkList';
 import LinkDetail from './Link/LinkDetail';
 import Header from './Header';
 
-import LinkState from '../context/Links/LinkState';
-import AuthState from '../context/Auth/AuthState';
+import FirebaseState from '../context/Firebase/FirebaseState';
 
 function App() {
   return (
-    <AuthState>
-      <LinkState>
-        <Router>
-          <div className="app-container">
-            <Header />
-            <div className="route-container">
-              <Switch>
-                <Route exact path="/" render={() => <Redirect to="/new/1" />} />
-                <Route path="/create" component={CreateLink} />
-                <Route path="/login" component={Login} />
-                <Route path="/forgot" component={ForgotPassword} />
-                <Route path="/search" component={SearchLinks} />
-                <Route path="/top" component={LinkList} />
-                <Route path="/new/:page" component={LinkList} />
-                <Route path="/link/:linkId" component={LinkDetail} />
-              </Switch>
-            </div>
+    <FirebaseState>
+      <Router>
+        <div className="app-container">
+          <Header />
+          <div className="route-container">
+            <Switch>
+              <Route exact path="/" render={() => <Redirect to="/new/1" />} />
+              <Route path="/create" component={CreateLink} />
+              <Route path="/login" component={Login} />
+              <Route path="/forgot" component={ForgotPassword} />
+              <Route path="/search" component={SearchLinks} />
+              <Route path="/top" component={LinkList} />
+              <Route path="/new/:page" component={LinkList} />
+              <Route path="/link/:linkId" component={LinkDetail} />
+            </Switch>
           </div>
-        </Router>
-      </LinkState>
-    </AuthState>
+        </div>
+      </Router>
+    </FirebaseState>
   );
 }
 

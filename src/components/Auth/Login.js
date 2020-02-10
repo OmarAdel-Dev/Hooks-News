@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import validateLogin from './validateLogin';
-import AuthContext from '../../context/Auth/authContext';
+import FireBaseContext from '../../context/Firebase/firebaseContext';
 import { Link } from 'react-router-dom';
 
 function Login(props) {
-  const authContext = useContext(AuthContext);
-  const { register, login, error, isAuthenticated } = authContext;
+  const firebaseContext = useContext(FireBaseContext);
+  const { register, login, error, isAuthenticated } = firebaseContext;
 
   const [loginState, setLoginState] = useState(true);
   const [errors, setErrors] = useState({});

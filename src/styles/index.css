@@ -36,7 +36,7 @@ input {
   background-color: buttonface;
   text-align: center;
   padding: 2px 6px 3px;
-  margin-right: 5px;
+  margin: 5px 5px 0 0;
   border-width: 3px;
   border-style: outset;
   border-color: buttonface;
@@ -141,7 +141,7 @@ textarea {
 .vote-button {
   font-size: 11px;
   color: #828282;
-  margin-left: 0.25rem;
+  margin: 0.25rem;
 }
 
 .forgot-password {

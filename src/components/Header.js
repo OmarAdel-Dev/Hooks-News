@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
-import AuthContext from '../context/Auth/authContext';
+import FirebaseContext from '../context/Firebase/firebaseContext';
 
 function Header() {
-  const authContext = useContext(AuthContext);
-  const { authUser, logout } = authContext;
+  const firebaseContext = useContext(FirebaseContext);
+  const { authUser, logout } = firebaseContext;
 
   return (
     <div className="header">

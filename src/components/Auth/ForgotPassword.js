@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import AuthContext from '../../context/Auth/authContext';
+import FirebaseContext from '../../context/Firebase/firebaseContext';
 
 function ForgotPassword() {
-  const authContext = useContext(AuthContext);
+  const firebaseContex = useContext(FirebaseContext);
 
-  const { resetPassword } = authContext;
+  const { resetPassword } = firebaseContex;
 
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
